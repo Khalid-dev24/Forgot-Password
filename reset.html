@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #0056b3;
+        }
+
+        label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 50%;
+            padding: 10px;
+            margin-left: 70px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #003f80;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .close-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            margin-right: 90px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background-color: #003f80;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Reset Password</h2>
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" placeholder="Enter new password" />
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" placeholder="Re-enter new password" />
+        <button id="resetButton">Reset Password</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <p>Your password has been successfully reset!</p>
+            <button class="close-btn" onclick="redirectToLogin()">Go to Login</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to redirect to the login page
+        function redirectToLogin() {
+            document.getElementById('successModal').style.display = 'none';
+            alert("Redirecting to login page...");
+            // Simulate redirecting to login (replace with actual login page URL)
+            window.location.href = "login.html";
+        }
+
+        // Password validation function
+        function validatePassword(password) {
+            const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,}$/;
+            return pattern.test(password);
+        }
+
+        // Event listener for the reset button
+        document.getElementById('resetButton').addEventListener('click', function () {
+            const newPassword = document.getElementById('newPassword').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+            // Check if password meets criteria
+            if (!validatePassword(newPassword)) {
+                alert("Password does not meet the criteria. It must be at least 6 characters, include one uppercase letter, one lowercase letter, and one special character.");
+                return;
+            }
+
+            // Check if passwords match
+            if (newPassword !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            // If valid, show the modal
+            document.getElementById('successModal').style.display = 'flex';
+        });
+    </script>
+</body>
+</html>
